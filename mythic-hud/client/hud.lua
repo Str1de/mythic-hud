@@ -678,6 +678,10 @@ function StartThreads()
 						},
 					})
 				end
+				-- Suppress native GTA weapon/ammo HUD components
+				HideHudComponentThisFrame(3)  -- weapon icon
+				HideHudComponentThisFrame(4)  -- ammo count
+				HideHudComponentThisFrame(20) -- weapon wheel
 			end
 			Wait(50)
 		end
