@@ -890,23 +890,23 @@ local function loadMap()
 			minimapOffset = ((defaultAspectRatio - aspectRatio) / 3.6) - 0.02
 		end
 
-		RequestStreamedTextureDict('slanted_minimap', false)
-		while not HasStreamedTextureDictLoaded('slanted_minimap') do
+		RequestStreamedTextureDict('squaremap', false)
+		while not HasStreamedTextureDictLoaded('squaremap') do
 			Wait(0)
 		end
 
 		SetMinimapClipType(1)
-		AddReplaceTexture('platform:/textures/graphics', 'radarmasksm', 'slanted_minimap', 'radarmasksm')
-		AddReplaceTexture('platform:/textures/graphics', 'radarmask1g', 'slanted_minimap', 'radarmasksm')
-		SetMinimapComponentPosition('minimap', 'L', 'B', 0.0 + 0.01, -0.047 + -0.025, 0.1638, 0.183)
-		SetMinimapComponentPosition('minimap_mask', 'L', 'B', 0.0 + 0.01, 0.0 + -0.025, 0.128, 0.20)
-		SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.01 + 0.01, 0.025 + -0.025, 0.262, 0.300)
+		AddReplaceTexture('platform:/textures/graphics', 'radarmasksm', 'squaremap', 'radarmasksm')
+		AddReplaceTexture('platform:/textures/graphics', 'radarmasksm', 'squaremap', 'radarmasksm')
+		SetMinimapComponentPosition('minimap', 'L', 'B', 0.0 + 0.01, -0.047 + -0.035, 0.1638, 0.183)
+		SetMinimapComponentPosition('minimap_mask', 'L', 'B', 0.0 + 0.01, 0.0 + -0.035, 0.128, 0.20)
+		SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.01 + 0.01, 0.025 + -0.035, 0.262, 0.300)
 		SetBlipAlpha(GetNorthRadarBlip(), 0)
 		SetMinimapClipType(1)
 		SetBigmapActive(true, false)
 		Wait(50)
 		SetBigmapActive(false, false)
-		SetStreamedTextureDictAsNoLongerNeeded('slanted_minimap')
+		SetStreamedTextureDictAsNoLongerNeeded('squaremap')
 	end)
 end
 

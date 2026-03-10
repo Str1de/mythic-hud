@@ -6,12 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
-        position: 'absolute',
-        bottom: '10.5vh',
-        left: '27vh',
-        display: 'flex',
-        alignItems: 'center',
         gap: '10px',
+        left: '14vw',
+        bottom: '8vh',
+        display: 'flex',
+        position: 'absolute',
+        alignItems: 'center',
         fontFamily: "'Oswald', sans-serif",
         pointerEvents: 'none',
     },

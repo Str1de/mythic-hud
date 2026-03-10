@@ -1,16 +1,5 @@
 local _ammoShowing = false
 
--- Hide native GTA ammo/weapon HUD elements
-CreateThread(function()
-    while true do
-        HideHudComponentThisFrame(2)  -- wanted stars (reticle area)
-        HideHudComponentThisFrame(3)  -- weapon icon
-        HideHudComponentThisFrame(4)  -- ammo count
-        HideHudComponentThisFrame(20) -- weapon wheel
-        Wait(0)
-    end
-end)
-
 local WEAPON_LABELS = {
     [`WEAPON_PISTOL`] = 'Pistol',
     [`WEAPON_PISTOL_MK2`] = 'Pistol MK2',

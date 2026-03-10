@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         left: '0vh',
         width: '50%',
         height: '90%',
-        transform: 'perspective(450px) rotateY(2.25deg)',
+
     },
     rightDiv: {
         position: 'absolute',
@@ -20,14 +20,14 @@ const useStyles = makeStyles((theme) => ({
         right: '0vh',
         width: '50%',
         height: '90%',
-        transform: 'perspective(450px) rotateY(-2.25deg)',
+
     },
     barsWrapper: {
-        position: 'absolute',
-        bottom: '0vh',
-        left: '5vh',
+        left: '3vh',
         width: 'auto',
+        bottom: '-2vh',
         height: 'auto',
+        position: 'absolute',
     },
     // relative so statWrapper's absolute left is measured from here
     wasteWrapper: {
