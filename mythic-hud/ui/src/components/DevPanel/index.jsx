@@ -72,7 +72,7 @@ const useStyles = makeStyles(() => ({
         width: 520, background: 'rgba(18,16,37,0.96)', border: '1px solid rgba(32,134,146,0.2)',
         boxShadow: '0 16px 60px rgba(0,0,0,0.7), 0 0 30px rgba(32,134,146,0.05)',
         zIndex: 99999, fontFamily: "'Oswald', sans-serif",
-        display: 'flex', flexDirection: 'column', maxHeight: 500, overflowY: 'auto',
+        display: 'flex', flexDirection: 'column', maxHeight: 'calc(100vh - 70px)', overflowY: 'auto',
         '&::-webkit-scrollbar': { width: 4 },
         '&::-webkit-scrollbar-thumb': { background: 'rgba(32,134,146,0.3)', borderRadius: 2 },
         '&::-webkit-scrollbar-track': { background: 'transparent' },
@@ -121,6 +121,39 @@ const useStyles = makeStyles(() => ({
     sliderValue: { color: '#208692', fontWeight: 600 },
     slider: { width: '100%', accentColor: '#208692', cursor: 'pointer' },
     deadRow: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 },
+    mockMinimap: {
+        position: 'fixed',
+        bottom: 18,
+        left: 18,
+        width: 240,
+        height: 135,
+        background: 'rgba(40,60,80,0.5)',
+        border: '2px solid rgba(32,134,146,0.4)',
+        zIndex: 1,
+        pointerEvents: 'none',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: "'Oswald', sans-serif",
+    },
+    mockMinimapLabel: {
+        fontSize: 11,
+        fontWeight: 600,
+        letterSpacing: '0.15em',
+        textTransform: 'uppercase',
+        color: 'rgba(32,134,146,0.6)',
+    },
+    mockMinimapSub: {
+        fontSize: 9,
+        color: 'rgba(255,255,255,0.25)',
+        letterSpacing: '0.08em',
+        marginTop: 2,
+    },
+    mockMinimapExpanded: {
+        width: 280,
+        height: 200,
+    },
 }));
 
 const DevPanel = () => {
@@ -128,6 +161,8 @@ const DevPanel = () => {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [statusesRegistered, setStatusesRegistered] = useState(false);
+    const [mockMap, setMockMap] = useState(false);
+    const [mockMapExpanded, setMockMapExpanded] = useState(false);
 
     // Status sliders
     const [health, setHealth] = useState(100);
@@ -152,6 +187,8 @@ const DevPanel = () => {
     const progressShowing    = useSelector((s) => s.progress.showing);
     const isDead             = useSelector((s) => s.status.isDead);
     const vehicleShowing     = useSelector((s) => s.vehicle.showing);
+    const ammoShowing        = useSelector((s) => s.ammo.showing);
+    const armedState         = useSelector((s) => s.app.armed);
 
     // Nitrous is installed when the "nos" status exists with value > 0
     const nosStatus    = useSelector((s) => s.status.statuses.find((st) => st.name === 'nos'));
@@ -227,11 +264,28 @@ const DevPanel = () => {
         if (interactionShowing) { dispatch({ type: 'SHOW_INTERACTION_MENU', payload: { toggle: false } }); }
         else { dispatch({ type: 'SET_INTERACTION_MENU_ITEMS', payload: { items: TEST_DATA.interaction } }); dispatch({ type: 'SHOW_INTERACTION_MENU', payload: { toggle: true } }); }
     };
+    // ── Ammo toggle ──────────────────────────────────────────────────────────
+    const toggleAmmo = () => {
+        if (ammoShowing && armedState) {
+            dispatch({ type: 'HIDE_AMMO', payload: {} });
+            dispatch({ type: 'ARMED', payload: { state: false } });
+        } else {
+            dispatch({ type: 'ARMED', payload: { state: true } });
+            dispatch({ type: 'UPDATE_AMMO', payload: { current: 24, reserve: 96, weaponLabel: 'Carbine Rifle' } });
+        }
+    };
+
     const fireNotification   = (type) => dispatch({ type: 'ADD_ALERT', payload: { notification: { ...TEST_DATA.notifications[type] } } });
     const clearNotifications = () => dispatch({ type: 'CLEAR_ALERTS' });
 
     return (
         <>
+            {mockMap && (
+                <div className={`${classes.mockMinimap}${mockMapExpanded ? ` ${classes.mockMinimapExpanded}` : ''}`}>
+                    <span className={classes.mockMinimapLabel}>Minimap</span>
+                    <span className={classes.mockMinimapSub}>{mockMapExpanded ? '280×200 (vehicle)' : '240×135 (on foot)'}</span>
+                </div>
+            )}
             <div className={classes.toggle} onClick={() => setOpen(!open)}>
                 <FontAwesomeIcon icon={['fas', open ? 'xmark' : 'wrench']} />
             </div>
@@ -341,6 +395,13 @@ const DevPanel = () => {
                             <button className={`${classes.btn}${listShowing ? ` ${classes.btnActive}` : ''}`} onClick={toggleList}>List Menu</button>
                             <button className={`${classes.btn}${interactionShowing ? ` ${classes.btnActive}` : ''}`} onClick={toggleInteraction}>Interaction Wheel</button>
                             <button className={`${classes.btn}${progressShowing ? ` ${classes.btnActive}` : ''}`} onClick={toggleProgress}>Progress Bar</button>
+                            <button className={`${classes.btn}${ammoShowing && armedState ? ` ${classes.btnActive}` : ''}`} onClick={toggleAmmo}>Ammo Counter</button>
+                            <button className={`${classes.btn}${mockMap ? ` ${classes.btnActive}` : ''}`} onClick={() => setMockMap(!mockMap)}>Mock Minimap</button>
+                            {mockMap && (
+                                <button className={`${classes.btn}${mockMapExpanded ? ` ${classes.btnActive}` : ''}`} onClick={() => setMockMapExpanded(!mockMapExpanded)}>
+                                    {mockMapExpanded ? 'Vehicle Size' : 'On Foot Size'}
+                                </button>
+                            )}
                         </div>
                     </div>
 

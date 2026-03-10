@@ -17,6 +17,7 @@ import infoOverlayReducer from './components/InfoOverlay/reducer';
 import gemReducer from './components/GemTable/reducer';
 import methReducer from './components/Meth/reducer';
 import arcadeReducer from './containers/Arcade/reducer';
+import ammoReducer from './components/Ammo/reducer';
 
 export default () =>
     combineReducers({
@@ -37,4 +38,5 @@ export default () =>
         gemTable: gemReducer,
         meth: methReducer,
         arcade: arcadeReducer,
+        ammo: ammoReducer,
     });

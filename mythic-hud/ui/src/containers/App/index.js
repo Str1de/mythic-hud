@@ -34,6 +34,7 @@ import DeathTexts from './DeathTexts';
 import Arcade from '../Arcade';
 import Flashbang from './Flashbang';
 import DevPanel from '../../components/DevPanel';
+import Ammo from '../../components/Ammo';
 
 library.add(fab, fas);
 
@@ -220,6 +221,7 @@ const App = ({ hidden }) => {
                 <Crosshair />
                 <SniperScope />
                 <GemTable />
+                <Ammo />
                 <DragMenu isDragMode={isDragMode} setIsDragMode={setIsDragMode} />
                 <DevPanel />
             </ThemeProvider>
