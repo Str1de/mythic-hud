@@ -146,6 +146,7 @@ const useStyles = makeStyles((theme) => ({
         bottom: '0vh',
         width: '100%',
         transition: 'height 0.2s ease',
+        borderRadius: '1vh',
     },
     barIcon: {
         position: 'absolute',
